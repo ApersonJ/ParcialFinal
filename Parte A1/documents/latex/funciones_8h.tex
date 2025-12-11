@@ -1,0 +1,154 @@
+\doxysection{funciones.\+h File Reference}
+\hypertarget{funciones_8h}{}\label{funciones_8h}\index{funciones.h@{funciones.h}}
+{\ttfamily \#include $<$string$>$}\newline
+Include dependency graph for funciones.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{funciones_8h_a8c6b744376f9134494f9521b4972ae20}{pedir\+Datos}} (double \&x1, double \&x2, double \&t, double \&v1, double \&v2, double \&m1, double \&m2, double \&k, double \&kc, double \&c, double \&d, double \&dt)
+\begin{DoxyCompactList}\small\item\em Solicita al usuario los datos iniciales del sistema de dos masas acopladas. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{funciones_8h_ad0a12fd471597b255ae7810b74345ba8}{funcion}} (double x1, double x2, double v1, double v2, double m1, double m2, double k, double kc, double c, double d, double \&dx1dt, double \&dx2dt, double \&dv1dt, double \&dv2dt)
+\begin{DoxyCompactList}\small\item\em Calcula las derivadas del sistema de ecuaciones diferenciales para dos masas acopladas. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{funciones_8h_a3e47c58a85df1be710804e5e8d0f56e9}{runge\+Kutta4}} (double \&x1, double \&x2, double \&v1, double \&v2, double \&m1, double \&m2, double \&k, double \&kc, double \&c, double \&d, double \&dt)
+\begin{DoxyCompactList}\small\item\em Integra el sistema mediante el método de Runge-\/\+Kutta de cuarto orden. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{funciones_8h_ac914e08bcba56eba1e76164710c56885}{guardar\+Datos}} (const std\+::string \&archivo, double x1, double x2, double t, double v1, double v2, double m1, double m2, double k, double kc, double c, double d, double dt, double tmax)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{funciones_8h_ad0a12fd471597b255ae7810b74345ba8}\label{funciones_8h_ad0a12fd471597b255ae7810b74345ba8} 
+\index{funciones.h@{funciones.h}!funcion@{funcion}}
+\index{funcion@{funcion}!funciones.h@{funciones.h}}
+\doxysubsubsection{\texorpdfstring{funcion()}{funcion()}}
+{\footnotesize\ttfamily void funcion (\begin{DoxyParamCaption}\item[{double}]{x1,  }\item[{double}]{x2,  }\item[{double}]{v1,  }\item[{double}]{v2,  }\item[{double}]{m1,  }\item[{double}]{m2,  }\item[{double}]{k,  }\item[{double}]{kc,  }\item[{double}]{c,  }\item[{double}]{d,  }\item[{double \&}]{dx1dt,  }\item[{double \&}]{dx2dt,  }\item[{double \&}]{dv1dt,  }\item[{double \&}]{dv2dt }\end{DoxyParamCaption})}
+
+
+
+Calcula las derivadas del sistema de ecuaciones diferenciales para dos masas acopladas. 
+
+Evalúa las ecuaciones del movimiento considerando fuerzas elásticas, amortiguamiento lineal y cuadrático, y el acoplamiento entre las masas.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x1} & Posición de la masa 1. \\
+\hline
+{\em x2} & Posición de la masa 2. \\
+\hline
+{\em v1} & Velocidad de la masa 1. \\
+\hline
+{\em v2} & Velocidad de la masa 2. \\
+\hline
+{\em m1} & Masa 1. \\
+\hline
+{\em m2} & Masa 2. \\
+\hline
+{\em k} & Constante del resorte individual. \\
+\hline
+{\em kc} & Constante del resorte acoplado. \\
+\hline
+{\em c} & Amortiguamiento lineal. \\
+\hline
+{\em d} & Amortiguamiento cuadrático. \\
+\hline
+{\em dx1dt} & Resultado\+: derivada de x1. \\
+\hline
+{\em dx2dt} & Resultado\+: derivada de x2. \\
+\hline
+{\em dv1dt} & Resultado\+: derivada de v1. \\
+\hline
+{\em dv2dt} & Resultado\+: derivada de v2. \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+% FIG 2
+\Hypertarget{funciones_8h_ac914e08bcba56eba1e76164710c56885}\label{funciones_8h_ac914e08bcba56eba1e76164710c56885} 
+\index{funciones.h@{funciones.h}!guardarDatos@{guardarDatos}}
+\index{guardarDatos@{guardarDatos}!funciones.h@{funciones.h}}
+\doxysubsubsection{\texorpdfstring{guardarDatos()}{guardarDatos()}}
+{\footnotesize\ttfamily void guardar\+Datos (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{archivo,  }\item[{double}]{x1,  }\item[{double}]{x2,  }\item[{double}]{t,  }\item[{double}]{v1,  }\item[{double}]{v2,  }\item[{double}]{m1,  }\item[{double}]{m2,  }\item[{double}]{k,  }\item[{double}]{kc,  }\item[{double}]{c,  }\item[{double}]{d,  }\item[{double}]{dt,  }\item[{double}]{tmax }\end{DoxyParamCaption})}
+
+\Hypertarget{funciones_8h_a8c6b744376f9134494f9521b4972ae20}\label{funciones_8h_a8c6b744376f9134494f9521b4972ae20} 
+\index{funciones.h@{funciones.h}!pedirDatos@{pedirDatos}}
+\index{pedirDatos@{pedirDatos}!funciones.h@{funciones.h}}
+\doxysubsubsection{\texorpdfstring{pedirDatos()}{pedirDatos()}}
+{\footnotesize\ttfamily void pedir\+Datos (\begin{DoxyParamCaption}\item[{double \&}]{x1,  }\item[{double \&}]{x2,  }\item[{double \&}]{t,  }\item[{double \&}]{v1,  }\item[{double \&}]{v2,  }\item[{double \&}]{m1,  }\item[{double \&}]{m2,  }\item[{double \&}]{k,  }\item[{double \&}]{kc,  }\item[{double \&}]{c,  }\item[{double \&}]{d,  }\item[{double \&}]{dt }\end{DoxyParamCaption})}
+
+
+
+Solicita al usuario los datos iniciales del sistema de dos masas acopladas. 
+
+Esta función pregunta por posiciones iniciales, velocidades, masas, constantes de resorte, amortiguamiento y parámetros de integración.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x1} & Posición inicial de la masa 1. \\
+\hline
+{\em x2} & Posición inicial de la masa 2. \\
+\hline
+{\em t} & Tiempo inicial. \\
+\hline
+{\em v1} & Velocidad inicial de la masa 1. \\
+\hline
+{\em v2} & Velocidad inicial de la masa 2. \\
+\hline
+{\em m1} & Masa 1. \\
+\hline
+{\em m2} & Masa 2. \\
+\hline
+{\em k} & Constante del resorte individual. \\
+\hline
+{\em kc} & Constante del resorte acoplado. \\
+\hline
+{\em c} & Coeficiente de amortiguamiento lineal. \\
+\hline
+{\em d} & Coeficiente de amortiguamiento cuadrático. \\
+\hline
+{\em dt} & Paso de integración. \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+% FIG 3
+\Hypertarget{funciones_8h_a3e47c58a85df1be710804e5e8d0f56e9}\label{funciones_8h_a3e47c58a85df1be710804e5e8d0f56e9} 
+\index{funciones.h@{funciones.h}!rungeKutta4@{rungeKutta4}}
+\index{rungeKutta4@{rungeKutta4}!funciones.h@{funciones.h}}
+\doxysubsubsection{\texorpdfstring{rungeKutta4()}{rungeKutta4()}}
+{\footnotesize\ttfamily void runge\+Kutta4 (\begin{DoxyParamCaption}\item[{double \&}]{x1,  }\item[{double \&}]{x2,  }\item[{double \&}]{v1,  }\item[{double \&}]{v2,  }\item[{double \&}]{m1,  }\item[{double \&}]{m2,  }\item[{double \&}]{k,  }\item[{double \&}]{kc,  }\item[{double \&}]{c,  }\item[{double \&}]{d,  }\item[{double \&}]{dt }\end{DoxyParamCaption})}
+
+
+
+Integra el sistema mediante el método de Runge-\/\+Kutta de cuarto orden. 
+
+Actualiza las posiciones y velocidades de ambas masas usando RK4.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x1} & Posición de la masa 1. \\
+\hline
+{\em x2} & Posición de la masa 2. \\
+\hline
+{\em v1} & Velocidad de la masa 1. \\
+\hline
+{\em v2} & Velocidad de la masa 2. \\
+\hline
+{\em m1} & Masa 1. \\
+\hline
+{\em m2} & Masa 2. \\
+\hline
+{\em k} & Constante de resorte individual. \\
+\hline
+{\em kc} & Constante del resorte acoplado. \\
+\hline
+{\em c} & Amortiguamiento lineal. \\
+\hline
+{\em d} & Amortiguamiento cuadrático. \\
+\hline
+{\em dt} & Paso de integración. \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+% FIG 4
+Here is the caller graph for this function\+:
+% FIG 5

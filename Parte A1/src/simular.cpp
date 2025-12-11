@@ -1,4 +1,3 @@
-
 #include "../include/funciones.h"
 #include <iostream>
 #include <fstream>
@@ -8,6 +7,25 @@
 
 using namespace std;
 
+/**
+ * @brief Solicita al usuario los datos iniciales del sistema de dos masas acopladas.
+ *
+ * Esta función pregunta por posiciones iniciales, velocidades, masas,
+ * constantes de resorte, amortiguamiento y parámetros de integración.
+ *
+ * @param x1 Posición inicial de la masa 1.
+ * @param x2 Posición inicial de la masa 2.
+ * @param t Tiempo inicial.
+ * @param v1 Velocidad inicial de la masa 1.
+ * @param v2 Velocidad inicial de la masa 2.
+ * @param m1 Masa 1.
+ * @param m2 Masa 2.
+ * @param k Constante del resorte individual.
+ * @param kc Constante del resorte acoplado.
+ * @param c Coeficiente de amortiguamiento lineal.
+ * @param d Coeficiente de amortiguamiento cuadrático.
+ * @param dt Paso de integración.
+ */
 void pedirDatos(double &x1, double &x2, double &t, double &v1, double &v2, double &m1, double &m2,
                  double &k, double &kc, double &c, double &d, double &dt) {
 
@@ -43,6 +61,27 @@ void pedirDatos(double &x1, double &x2, double &t, double &v1, double &v2, doubl
     cin >> dt;
 }
 
+/**
+ * @brief Calcula las derivadas del sistema de ecuaciones diferenciales para dos masas acopladas.
+ *
+ * Evalúa las ecuaciones del movimiento considerando fuerzas elásticas,
+ * amortiguamiento lineal y cuadrático, y el acoplamiento entre las masas.
+ *
+ * @param x1 Posición de la masa 1.
+ * @param x2 Posición de la masa 2.
+ * @param v1 Velocidad de la masa 1.
+ * @param v2 Velocidad de la masa 2.
+ * @param m1 Masa 1.
+ * @param m2 Masa 2.
+ * @param k Constante del resorte individual.
+ * @param kc Constante del resorte acoplado.
+ * @param c Amortiguamiento lineal.
+ * @param d Amortiguamiento cuadrático.
+ * @param dx1dt Resultado: derivada de x1.
+ * @param dx2dt Resultado: derivada de x2.
+ * @param dv1dt Resultado: derivada de v1.
+ * @param dv2dt Resultado: derivada de v2.
+ */
 void funcion(double x1, double x2, double v1, double v2, double m1, double m2, 
             double k, double kc, double c, double d, 
             double &dx1dt, double &dx2dt, double &dv1dt, double &dv2dt) {
@@ -54,6 +93,23 @@ void funcion(double x1, double x2, double v1, double v2, double m1, double m2,
 
 }
 
+/**
+ * @brief Integra el sistema mediante el método de Runge-Kutta de cuarto orden.
+ *
+ * Actualiza las posiciones y velocidades de ambas masas usando RK4.
+ *
+ * @param x1 Posición de la masa 1.
+ * @param x2 Posición de la masa 2.
+ * @param v1 Velocidad de la masa 1.
+ * @param v2 Velocidad de la masa 2.
+ * @param m1 Masa 1.
+ * @param m2 Masa 2.
+ * @param k Constante de resorte individual.
+ * @param kc Constante del resorte acoplado.
+ * @param c Amortiguamiento lineal.
+ * @param d Amortiguamiento cuadrático.
+ * @param dt Paso de integración.
+ */
 void rungeKutta4(double &x1, double &x2, double &v1, double &v2, double &m1, double &m2,
                  double &k, double &kc, double &c, double &d, double &dt) {
     double dx11, dv11, dx21, dv21;
@@ -73,13 +129,33 @@ void rungeKutta4(double &x1, double &x2, double &v1, double &v2, double &m1, dou
     funcion(x1 + dt * dx13, x2 + dt *dx23, 
             v1 + dt * dv13, v2 + dt *dv23, m1, m2, k, kc, c, d, dx14, dx24, dv14, dv24); 
 
-
     x1 += dt * (dx11 + 2 * dx12 + 2 * dx13 + dx14) / 6.0;
     v1 += dt * (dv11 + 2 * dv12 + 2 * dv13 + dv14) / 6.0;
     x2 += dt * (dx21 + 2 * dx22 + 2 * dx23 + dx24) / 6.0;
     v2 += dt * (dv21 + 2 * dv22 + 2 * dv23 + dv24) / 6.0;
 }
 
+/**
+ * @brief Guarda los datos simulados en un archivo y genera gráficas mediante Gnuplot.
+ *
+ * Registra el tiempo, posiciones, velocidades y momento lineal de cada masa.
+ * Además ejecuta los scripts de Gnuplot para producir las gráficas.
+ *
+ * @param archivo Nombre del archivo de salida.
+ * @param x1 Posición inicial de la masa 1.
+ * @param x2 Posición inicial de la masa 2.
+ * @param t0 Tiempo inicial.
+ * @param v1 Velocidad inicial de la masa 1.
+ * @param v2 Velocidad inicial de la masa 2.
+ * @param m1 Masa de la masa 1.
+ * @param m2 Masa de la masa 2.
+ * @param k Constante del resorte individual.
+ * @param kc Constante del resorte acoplado.
+ * @param c Amortiguamiento lineal.
+ * @param d Amortiguamiento cuadrático.
+ * @param dt Paso de integración.
+ * @param tmax Tiempo máximo de la simulación.
+ */
 void guardarDatos(const string &archivo, double x1, double x2, double t0, double v1, double v2,
                      double m1, double m2, double k,  double kc, double c, double d, double dt, double tmax) {
     system("mkdir -p ../results/listas"); 
@@ -89,11 +165,10 @@ void guardarDatos(const string &archivo, double x1, double x2, double t0, double
     file << setw(10) << "t" << setw(15) << "x1" << setw(15) << "x2" << setw(15) << 
             "v1" << setw(15) << "v2" << setw(15) << "p1" << setw(15) << "p2" <<endl;
 
-                                
     double p1 = m1 * v1;
     double p2 = m2 * v2; 
 
-    /// Bucle de integraciÃ³n temporal.
+    /// Bucle de integración temporal.
     for ( double t = t0 ; t <= tmax; t += dt) {
         file << setw(10) << t << setw(15) << x1 << setw(15) << x2 << setw(15) << 
             v1 << setw(15) << v2 << setw(15) << p1 << setw(15) << p2 <<endl;
@@ -109,3 +184,4 @@ void guardarDatos(const string &archivo, double x1, double x2, double t0, double
     system ("gnuplot ../scripts/graficar.gp");
     system ("gnuplot ../scripts/graficar2.gp");
 }
+

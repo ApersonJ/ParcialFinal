@@ -1,0 +1,101 @@
+#---------------------------------------------------------------------------
+# Project configuration
+#---------------------------------------------------------------------------
+
+PROJECT_NAME           = "Sistema de dos masas acopladas"
+PROJECT_NUMBER         = "1.0"
+PROJECT_BRIEF          = "Simulación numérica de un sistema masa-resorte doble con amortiguamiento"
+OUTPUT_DIRECTORY       = documents
+
+#---------------------------------------------------------------------------
+# Documentation generation
+#---------------------------------------------------------------------------
+
+GENERATE_HTML          = YES
+GENERATE_LATEX         = YES
+GENERATE_MAN           = NO
+GENERATE_RTF           = NO
+
+#---------------------------------------------------------------------------
+# Input
+#---------------------------------------------------------------------------
+
+INPUT                  = src \
+                         include \
+                         documents
+
+FILE_PATTERNS          = *.cpp \
+                         *.h \
+                         *.hpp \
+                         *.tex
+
+RECURSIVE              = YES
+
+# Excluir resultados generados y scripts
+EXCLUDE                = results \
+                         scripts
+
+EXCLUDE_PATTERNS       = */results/* \
+                         */scripts/* \
+                         */*.pdf
+
+#---------------------------------------------------------------------------
+# Source code extraction
+#---------------------------------------------------------------------------
+
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+EXTRACT_LOCAL_CLASSES  = YES
+EXTRACT_LOCAL_METHODS  = YES
+EXTRACT_ANON_NSPACES   = YES
+
+#---------------------------------------------------------------------------
+# Build options
+#---------------------------------------------------------------------------
+
+QUIET                  = NO
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = NO
+WARN_IF_DOC_ERROR      = YES
+
+#---------------------------------------------------------------------------
+# HTML output
+#---------------------------------------------------------------------------
+
+HTML_COLORSTYLE_HUE           = 220
+HTML_COLORSTYLE_SAT           = 100
+HTML_COLORSTYLE_GAMMA         = 80
+HTML_DYNAMIC_SECTIONS         = YES
+GENERATE_TREEVIEW             = YES
+TREEVIEW_WIDTH                = 250
+
+#---------------------------------------------------------------------------
+# LaTeX output
+#---------------------------------------------------------------------------
+
+GENERATE_LATEX        = YES
+LATEX_OUTPUT          = latex
+PDF_HYPERLINKS        = YES
+USE_PDFLATEX          = YES
+
+#---------------------------------------------------------------------------
+# Diagrams
+#---------------------------------------------------------------------------
+
+HAVE_DOT              = YES
+DOT_NUM_THREADS       = 2
+CALL_GRAPH            = YES
+CALLER_GRAPH          = YES
+CLASS_GRAPH           = YES
+COLLABORATION_GRAPH   = YES
+DOT_IMAGE_FORMAT      = png
+DOT_TRANSPARENT       = YES
+
+#---------------------------------------------------------------------------
+# Misc
+#---------------------------------------------------------------------------
+
+OPTIMIZE_OUTPUT_FOR_C  = YES
+FULL_PATH_NAMES        = NO
+STRIP_FROM_PATH        = "./"

@@ -1,0 +1,72 @@
+% Teoría del oscilador no lineal amortiguado
+% Archivo: teoria.tex
+
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{physics}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\title{Teoría del Oscilador No Lineal Amortiguado}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{1. Introducción}
+En este documento se presenta la teoría utilizada para modelar un oscilador no lineal sometido a una fuerza restauradora proporcional al desplazamiento y una fuerza de amortiguamiento cuadrática proporcional al cuadrado de la velocidad.
+
+El sistema está gobernado por la ecuación diferencial:
+\begin{equation}
+ m \ddot{x} + \lambda \, \dot{x} |\dot{x}| + kx = 0,
+\end{equation}
+donde $m$ es la masa, $k$ es la constante de resorte y $\lambda$ el coeficiente de amortiguamiento no lineal.
+
+\section*{2. Conversión a un Sistema de Primer Orden}
+Para aplicar el método de Runge--Kutta 4 (RK4), convertimos la ecuación de segundo orden en un sistema de ecuaciones de primer orden.
+
+Definimos:
+\begin{align}
+ y_1 &= x, \\
+ y_2 &= \dot{x}.
+\end{align}
+
+Las ecuaciones quedan:
+\begin{align}
+ \dot{y}_1 &= y_2, \\
+ \dot{y}_2 &= -\frac{k}{m} y_1 - \frac{\lambda}{m} y_2 |y_2|.
+\end{align}
+
+\section*{3. Método de Runge--Kutta de Orden 4}
+Para integrar un sistema de ecuaciones:
+\begin{equation}
+ \dot{\mathbf{y}} = \mathbf{f}(t, \mathbf{y}),
+\end{equation}
+se calcula:
+
+\begin{align}
+ \mathbf{k}_1 &= \mathbf{f}(t, \mathbf{y}), \\
+ \mathbf{k}_2 &= \mathbf{f}\left(t + \frac{h}{2},\, \mathbf{y} + \frac{h}{2} \mathbf{k}_1\right), \\
+ \mathbf{k}_3 &= \mathbf{f}\left(t + \frac{h}{2},\, \mathbf{y} + \frac{h}{2} \mathbf{k}_2\right), \\
+ \mathbf{k}_4 &= \mathbf{f}\left(t + h,\, \mathbf{y} + h \mathbf{k}_3\right).
+\end{align}
+
+Luego:
+\begin{equation}
+ \mathbf{y}(t+h) = \mathbf{y}(t) + \frac{h}{6} \left( \mathbf{k}_1 + 2\mathbf{k}_2 + 2\mathbf{k}_3 + \mathbf{k}_4 \right).
+\end{equation}
+
+\section*{4. Amortiguamiento No Lineal}
+El término disipativo:
+\begin{equation}
+ F_d = -\lambda v |v|,
+\end{equation}
+corresponde a amortiguamiento cuadrático, típico en sistemas con resistencia aerodinámica o fluidos. A diferencia del amortiguamiento lineal ($F = -b v$), aquí la disipación crece más rápidamente con la velocidad.
+
+\section*{5. Conclusión}
+El método RK4 permite integrar de manera precisa sistemas no lineales como el oscilador amortiguado cuadráticamente. Esta teoría justifica las ecuaciones implementadas en el código y describe la dinámica física del sistema.
+
+\end{document}
