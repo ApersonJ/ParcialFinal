@@ -1,0 +1,114 @@
+\documentclass[12pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tikz}
+\usetikzlibrary{calc,patterns,decorations.pathmorphing,decorations.markings}
+\geometry{a4paper, margin=2.5cm}
+\title{Resolución Numérica de la Ecuación de Laplace en 2D usando Diferencias Finitas y el Método Gauss}
+\author{Facultad de ciencia naturales y matematicas}
+\date{\today}
+
+\begin{document}
+	
+	\maketitle
+	\section{Formulación Matemática y Metodología Numérica}
+	
+	\subsection{Ecuación de Laplace Bidimensional}
+	El problema físico consiste en resolver la ecuación de Laplace en dos dimensiones para el potencial electrostático $\phi(x,y)$ en un dominio rectangular $[0,L]\times[0,H]$:
+	\begin{equation}
+		\nabla^2\phi(x,y) = \frac{\partial^2\phi}{\partial x^2} + \frac{\partial^2\phi}{\partial y^2} = 0
+	\end{equation}
+	definida en un dominio rectangular:
+	\[
+	0 \le x \le L, \qquad 0 \le y \le H.
+	\]
+	sujeta a condiciones de frontera de Dirichlet, donde tres bordes tienen potencial constante y un cuarto borde presenta una variación espacial específica, según uno de los ocho casos propuestos en el enunciado.
+	
+	\subsection{Discretización por Diferencias Finitas}
+	Se discretiza el dominio con una malla uniforme de $N_x \times N_y$ puntos:
+	\begin{equation}
+		x_i = i\Delta x,\quad \Delta x = \frac{L}{N_x-1},\quad i=0,1,\dots,N_x-1
+	\end{equation}
+	\begin{equation}
+		y_j = j\Delta y,\quad \Delta y = \frac{H}{N_y-1},\quad j=0,1,\dots,N_y-1
+	\end{equation}
+	
+	Usando diferencias finitas centradas de segundo orden:
+	\begin{align}
+		\frac{\partial^2\phi}{\partial x^2} &\approx \frac{\phi_{i+1,j} - 2\phi_{i,j} + \phi_{i-1,j}}{(\Delta x)^2} \\
+		\frac{\partial^2\phi}{\partial y^2} &\approx \frac{\phi_{i,j+1} - 2\phi_{i,j} + \phi_{i,j-1}}{(\Delta y)^2}
+	\end{align}
+	
+	Para simplificación y eficiencia computacional, se considera $\Delta x = \Delta y = h$, obteniendo la ecuación discreta:
+	\begin{equation*}
+		\phi_{i,j} = \frac{1}{4}\left(\phi_{i+1,j} + \phi_{i-1,j} + \phi_{i,j+1} + \phi_{i,j-1}\right)
+	\end{equation*}
+	Esta ecuación es válida únicamente para los puntos interiores del dominio.
+	
+	
+	\subsection{Implementación del Método SOR (Successive Over-Relaxation)}
+	El método Gauss--Seidel actualiza iterativamente, pero su convergencia puede ser lenta. Para mejorarla, se añade un parámetro de sobre–relajación $\omega$:
+	\begin{equation}
+		\phi^{(k+1)}_{i,j}
+		= (1 - \omega)\,\phi^{(k)}_{i,j}
+		+ \omega \cdot \frac{1}{4}
+		\left( \phi^{(k+1)}_{i+1,j}
+		+ \phi^{(k+1)}_{i-1,j}
+		+ \phi^{(k)}_{i,j+1}
+		+ \phi^{(k)}_{i,j-1} \right).
+	\end{equation}
+	
+	Para $1 < \omega < 2$ la convergencia puede acelerarse notablemente.  
+	En este proyecto se utilizó $\omega = 1.85$, adecuado para mallas rectangulares.
+	
+	El error global se evalúa como:
+	\[
+	E^{(k)} = 
+	\sum_{i,j}
+	\left| \phi^{(k+1)}_{i,j} - \phi^{(k)}_{i,j} \right|,
+	\]
+	y la iteración se detiene cuando:
+	\[
+	E^{(k)} < 10^{-6}.
+	\]
+	\subsection{Condiciones de Frontera Implementadas}
+	Según el caso 8 del enunciado, se implementaron las siguientes condiciones:
+	\begin{itemize}
+		\item \textbf{Borde izquierdo} $(x=0)$: $\phi(0,y) = V_{\text{left}} = 0.0$
+		\item \textbf{Borde derecho} $(x=L)$: $\phi(L,y) = V_{\text{right}} = 10.0$
+		\item \textbf{Borde superior} $(y=H)$: $\phi(x,H) = V_{\text{top}} = 5.0$
+		\item \textbf{Borde inferior} $(y=0)$: $\phi(x,0) = \cosh(x)$
+	\end{itemize}
+	
+	La función $\cosh(x)$ se evalúa en cada nodo del borde inferior mediante:
+	\begin{equation}
+		\phi_{0,i} = \cosh(x_i) = \cosh(i\Delta x),\quad i=0,\dots,N_x-1
+	\end{equation}
+	
+	\subsection{Criterios de Convergencia y Parámetros}
+	\begin{itemize}
+		\item \textbf{Tolerancia}: $\epsilon_{\text{tol}} = 10^{-6}$
+		\item \textbf{Error calculado}: Suma absoluta de diferencias entre iteraciones sucesivas
+		\item \textbf{Máximo de iteraciones}: $5\times10^5$ para evitar bucles infinitos
+		\item \textbf{Dimensión de malla}: $N_x = N_y = 51$ puntos en cada dirección
+		\item \textbf{Dominio}: $L = H = 5.0$ unidades de longitud
+	\end{itemize}
+	
+	\subsection{Implementación Computacional}
+	La solución se implementó en C++ usando:
+	\begin{itemize}
+		\item Matriz bidimensional de tamaño $(N_y \times N_x)$ para almacenar $\phi$
+		\item Inicialización con ceros en todos los puntos interiores
+		\item Aplicación explícita de condiciones de frontera antes de iterar
+		\item Almacenamiento de resultados en archivo de texto para posterior visualización
+	\end{itemize}
+	
+	El método SOR garantiza convergencia para la ecuación de Laplace discretizada, siendo particularmente eficiente cuando se selecciona un valor óptimo de $\omega$.
+\end{document}

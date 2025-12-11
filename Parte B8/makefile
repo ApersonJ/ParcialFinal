@@ -1,16 +1,18 @@
-CXX=g++
-CXXFLAGS=-O2 -std=c++11
+# ===== Makefile  =====
+.PHONY: all build run doc clean
 
-all: run graficas
+all: run doc            # o solo 'run' si no quiere depender de LaTeX
 
-run:
-	$(CXX) src/*.cpp -o laplace
-	./laplace
+build:
+	mkdir -p bin resultados scripts documents
+	g++ src/main.cpp src/laplace.cpp -Iinclude -o bin/DampedOscilatorB
 
-graficas:
-	bash scripts/generar_graficas.sh
+run: build
+	cd bin && ./DampedOscilatorB
+
+doc:
+	
+	pdflatex -interaction=nonstopmode -output-directory=documents ../documents/teoria.tex
 
 clean:
-	rm -f laplace
-	rm -f resultados/listas/*.dat
-	rm -f resultados/graficas/*.png
+	rm -f bin/DampedOscilatorB resultados/* scripts/*.gp documents/*.aux documents/*.log documents/*.pdf

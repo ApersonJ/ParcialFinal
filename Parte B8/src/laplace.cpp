@@ -5,7 +5,25 @@
 
 using namespace std;
 
-void aplicar_fronteras(vector<vector<double>> &phi, int NX, int NY,
+/**
+ * @brief Aplica las condiciones de frontera al potencial eléctrico f(x,y).
+ *
+ * Asigna valores fijos en los cuatro bordes del dominio:
+ * - Borde izquierdo: f = Vleft
+ * - Borde derecho: f = Vright
+ * - Borde superior: f = Vtop
+ * - Borde inferior: f(x,0) = cosh(x)
+ *
+ * @param phi Matriz 2D del potencial eléctrico.
+ * @param NX Número de nodos en la dirección x.
+ * @param NY Número de nodos en la dirección y.
+ * @param L Longitud del dominio en x.
+ * @param H Altura del dominio en y.
+ * @param Vleft Valor del potencial en el borde izquierdo.
+ * @param Vright Valor del potencial en el borde derecho.
+ * @param Vtop Valor del potencial en el borde superior.
+ */
+void aplicar_fronteras(vector<vector<double> > &phi, int NX, int NY,
                        double L, double H,
                        double Vleft, double Vright, double Vtop)
 {
@@ -23,13 +41,26 @@ void aplicar_fronteras(vector<vector<double>> &phi, int NX, int NY,
     for (int i = 0; i < NX; i++)
         phi[NY - 1][i] = Vtop;
 
-    // Borde inferior (punto 8): Ï†(x,0)=cosh(x)
+    // Borde inferior: f(x,0)=cosh(x)
     for (int i = 0; i < NX; i++) {
         double x = i * dx;
         phi[0][i] = cosh(x);
     }
 }
 
+/**
+ * @brief Realiza una iteración del método Gauss-Seidel con SOR.
+ *
+ * Actualiza el potencial f en los nodos interiores usando Gauss-Seidel,
+ * mejorado con un factor de sobrerrelajación (SOR).
+ *
+ * @param phi Matriz del potencial eléctrico.
+ * @param NX Número de nodos en x.
+ * @param NY Número de nodos en y.
+ * @param w Factor de sobrerrelajación (1 < w < 2 recomendado).
+ *
+ * @return double Suma del cambio absoluto en todos los nodos, usada como error.
+ */
 double gauss_seidel_SOR(vector<vector<double>> &phi,
                         int NX, int NY,
                         double w)
@@ -53,6 +84,16 @@ double gauss_seidel_SOR(vector<vector<double>> &phi,
     return error;
 }
 
+/**
+ * @brief Guarda la matriz del potencial eléctrico f en un archivo de texto.
+ *
+ * El archivo se guarda como una malla rectangular con valores separados por espacio.
+ *
+ * @param phi Matriz del potencial.
+ * @param NX Número de nodos en x.
+ * @param NY Número de nodos en y.
+ * @param filename Nombre del archivo de salida.
+ */
 void guardar(const vector<vector<double>> &phi,
              int NX, int NY, const string &filename)
 {
@@ -66,3 +107,4 @@ void guardar(const vector<vector<double>> &phi,
         file << "\n";
     }
 }
+

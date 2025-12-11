@@ -1,0 +1,26 @@
+var NAVTREEINDEX0 =
+{
+"dir_68267d1309a1af8e8297ef4c3efbcdba.html":[0,0,2],
+"dir_8dd08f2658aa08180a5d08d0b206f839.html":[0,0,0],
+"dir_d44c64559bbebec7f509842c48db8b23.html":[0,0,1],
+"files.html":[0,0],
+"globals.html":[0,1,0],
+"globals_func.html":[0,1,1],
+"index.html":[],
+"laplace_8cpp.html":[0,0,2,0],
+"laplace_8cpp.html#a48e7890a680bdf054fe6ce61ce1f10fa":[0,0,2,0,2],
+"laplace_8cpp.html#a61b948379b3f1384ac7ddde85e6cdd54":[0,0,2,0,1],
+"laplace_8cpp.html#ad2a6126361f352e2041a47c1295cb4ef":[0,0,2,0,0],
+"laplace_8cpp_source.html":[0,0,2,0],
+"laplace_8h.html":[0,0,1,0],
+"laplace_8h.html#a48e7890a680bdf054fe6ce61ce1f10fa":[0,0,1,0,2],
+"laplace_8h.html#a61b948379b3f1384ac7ddde85e6cdd54":[0,0,1,0,1],
+"laplace_8h.html#ad2a6126361f352e2041a47c1295cb4ef":[0,0,1,0,0],
+"laplace_8h_source.html":[0,0,1,0],
+"main_8cpp.html":[0,0,2,1],
+"main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4":[0,0,2,1,0],
+"main_8cpp_source.html":[0,0,2,1],
+"pages.html":[],
+"teoria_8tex.html":[0,0,0,0],
+"teoria_8tex_source.html":[0,0,0,0]
+};

@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Soluci贸n de Ecuaci贸n de Laplace en 2D: Archivo de c贸digo fuente src/laplace.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Soluci贸n de Ecuaci贸n de Laplace en 2D<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">Implementaci贸n del m茅todo Gauss-Seidel con SOR para resolver la ecuaci贸n de Laplace con condiciones mixtas de frontera</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('laplace_8cpp_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">laplace.cpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="laplace_8cpp.html">Ir a la documentaci贸n de este archivo.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;fstream&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;cmath&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;../include/laplace.h&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">using namespace </span>std;</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="foldopen" id="foldopen00026" data-start="{" data-end="}">
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="laplace_8h.html#ad2a6126361f352e2041a47c1295cb4ef">   26</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="laplace_8cpp.html#ad2a6126361f352e2041a47c1295cb4ef">aplicar_fronteras</a>(vector&lt;vector&lt;double&gt; &gt; &amp;phi, <span class="keywordtype">int</span> NX, <span class="keywordtype">int</span> NY,</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>                       <span class="keywordtype">double</span> L, <span class="keywordtype">double</span> H,</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>                       <span class="keywordtype">double</span> Vleft, <span class="keywordtype">double</span> Vright, <span class="keywordtype">double</span> Vtop)</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>{</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keywordtype">double</span> dx = L / (NX - 1);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="comment">// Borde izquierdo x=0</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; NY; j++)</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        phi[j][0] = Vleft;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="comment">// Borde derecho x=L</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; NY; j++)</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        phi[j][NX - 1] = Vright;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="comment">// Borde superior y=H</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; NX; i++)</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        phi[NY - 1][i] = Vtop;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="comment">// Borde inferior: f(x,0)=cosh(x)</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; NX; i++) {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keywordtype">double</span> x = i * dx;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        phi[0][i] = cosh(x);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    }</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>}</div>
+</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="foldopen" id="foldopen00064" data-start="{" data-end="}">
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="laplace_8h.html#a61b948379b3f1384ac7ddde85e6cdd54">   64</a></span><span class="keywordtype">double</span> <a class="code hl_function" href="laplace_8cpp.html#a61b948379b3f1384ac7ddde85e6cdd54">gauss_seidel_SOR</a>(vector&lt;vector&lt;double&gt;&gt; &amp;phi,</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>                        <span class="keywordtype">int</span> NX, <span class="keywordtype">int</span> NY,</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                        <span class="keywordtype">double</span> w)</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>{</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keywordtype">double</span> error = 0.0;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="keywordtype">double</span> phi_old;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 1; j &lt; NY - 1; j++) {</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt; NX - 1; i++) {</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            phi_old = phi[j][i];</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            <span class="keywordtype">double</span> newphi = 0.25 * (phi[j+1][i] + phi[j-1][i]</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>                                  + phi[j][i+1] + phi[j][i-1]);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            phi[j][i] = (1 - w) * phi_old + w * newphi;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            error += fabs(phi[j][i] - phi_old);</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        }</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    }</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <span class="keywordflow">return</span> error;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>}</div>
+</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
+<div class="foldopen" id="foldopen00097" data-start="{" data-end="}">
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="laplace_8h.html#a48e7890a680bdf054fe6ce61ce1f10fa">   97</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="laplace_8cpp.html#a48e7890a680bdf054fe6ce61ce1f10fa">guardar</a>(<span class="keyword">const</span> vector&lt;vector&lt;double&gt;&gt; &amp;phi,</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>             <span class="keywordtype">int</span> NX, <span class="keywordtype">int</span> NY, <span class="keyword">const</span> <span class="keywordtype">string</span> &amp;filename)</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>{</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    ofstream file(filename);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; NY; j++) {</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; NX; i++) {</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            file &lt;&lt; phi[j][i];</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            <span class="keywordflow">if</span> (i &lt; NX - 1) file &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        }</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        file &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    }</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>}</div>
+</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="ttc" id="alaplace_8cpp_html_a48e7890a680bdf054fe6ce61ce1f10fa"><div class="ttname"><a href="laplace_8cpp.html#a48e7890a680bdf054fe6ce61ce1f10fa">guardar</a></div><div class="ttdeci">void guardar(const vector&lt; vector&lt; double &gt; &gt; &amp;phi, int NX, int NY, const string &amp;filename)</div><div class="ttdoc">Guarda la matriz del potencial el閏trico f en un archivo de texto.</div><div class="ttdef"><b>Definition</b> <a href="laplace_8cpp_source.html#l00097">laplace.cpp:97</a></div></div>
+<div class="ttc" id="alaplace_8cpp_html_a61b948379b3f1384ac7ddde85e6cdd54"><div class="ttname"><a href="laplace_8cpp.html#a61b948379b3f1384ac7ddde85e6cdd54">gauss_seidel_SOR</a></div><div class="ttdeci">double gauss_seidel_SOR(vector&lt; vector&lt; double &gt; &gt; &amp;phi, int NX, int NY, double w)</div><div class="ttdoc">Realiza una iteraci髇 del m閠odo Gauss-Seidel con SOR.</div><div class="ttdef"><b>Definition</b> <a href="laplace_8cpp_source.html#l00064">laplace.cpp:64</a></div></div>
+<div class="ttc" id="alaplace_8cpp_html_ad2a6126361f352e2041a47c1295cb4ef"><div class="ttname"><a href="laplace_8cpp.html#ad2a6126361f352e2041a47c1295cb4ef">aplicar_fronteras</a></div><div class="ttdeci">void aplicar_fronteras(vector&lt; vector&lt; double &gt; &gt; &amp;phi, int NX, int NY, double L, double H, double Vleft, double Vright, double Vtop)</div><div class="ttdoc">Aplica las condiciones de frontera al potencial el閏trico f(x,y).</div><div class="ttdef"><b>Definition</b> <a href="laplace_8cpp_source.html#l00026">laplace.cpp:26</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="laplace_8cpp.html">laplace.cpp</a></li>
+    <li class="footer">Generado el Jueves, 11 de diciembre de 2025 09:10:05 para Soluci贸n de Ecuaci贸n de Laplace en 2D por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>
